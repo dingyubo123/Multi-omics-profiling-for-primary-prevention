@@ -99,7 +99,7 @@ def load_data_with_encoding(file_path, chunk_size=100000):
     return data, protein_columns
 
 
-def select_stable_features(protein_frequency, min_frequency=0.8, min_features=10):
+def select_stable_features(protein_frequency, min_frequency=0.9, min_features=10):
     stable_features = protein_frequency[protein_frequency >= min_frequency].index.tolist()
     if len(stable_features) < min_features:
         stable_features = protein_frequency.nlargest(min_features).index.tolist()
@@ -236,7 +236,7 @@ def main():
         protein_frequency[feats] += 1
 
     protein_frequency /= 1000
-    stable_features = select_stable_features(protein_frequency, 0.8, 15)
+    stable_features = select_stable_features(protein_frequency, 0.9, 15)
 
     # Save outputs
     protein_freq_df = pd.DataFrame({'Protein': protein_frequency.index, 'Frequency': protein_frequency.values}).to_csv(
